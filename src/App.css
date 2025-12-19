@@ -2,6 +2,87 @@
   text-align: center;
 }
 
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background-color: #f4f6f8;
+}
+
+/* ---------- Navbar ---------- */
+.navbar {
+  background-color: #1f2933;
+  padding: 14px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar h3 {
+  color: #ffffff;
+  margin: 0;
+}
+
+.navbar a {
+  color: #e5e7eb;
+  text-decoration: none;
+  margin-left: 18px;
+  font-weight: 500;
+}
+
+.navbar a:hover {
+  color: #ffffff;
+}
+
+/* ---------- Card Form ---------- */
+.card {
+  background-color: #ffffff;
+  width: 380px;
+  margin: 60px auto;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.card h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #111827;
+}
+
+.card input,
+.card select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 14px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+}
+
+.card input:focus,
+.card select:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+/* ---------- Button ---------- */
+.btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #1e40af;
+}
+
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -35,4 +116,41 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+.page-title {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #111827;
+}
+
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.table {
+  width: 80%;
+  margin: 40px auto;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table th, .table td {
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+.table th {
+  background-color: #1f2933;
+  color: white;
+}
+
+.table tr:hover {
+  background-color: #f3f4f6;
 }
