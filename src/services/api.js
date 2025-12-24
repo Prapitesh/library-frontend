@@ -1,16 +1,18 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://library-backend-2-xuej.onrender.com",
+  baseURL: "http://localhost:7777",
 });
 
-/* 🔐 Attach BASIC AUTH only for PROTECTED APIs */
+/* 🔐 Attach BASIC AUTH correctly */
 API.interceptors.request.use((config) => {
   const auth = JSON.parse(localStorage.getItem("auth"));
+  const url = config.url || "";
 
-  const isAuthApi = config.url.startsWith("/auth");
+  const skipAuth =
+    url.includes("/auth/login") || url.includes("/auth/register");
 
-  if (auth && !isAuthApi) {
+  if (auth && !skipAuth) {
     config.auth = {
       username: auth.username,
       password: auth.password,
@@ -24,9 +26,7 @@ API.interceptors.request.use((config) => {
 export const registerUser = (data) => API.post("/auth/register", data);
 
 export const loginUser = (username, password) =>
-  API.get("/auth/login", {
-    auth: { username, password },
-  });
+  API.get("/auth/login", { auth: { username, password } });
 
 // ---------- STUDENT ----------
 export const saveStudent = (data) => API.post("/student/apis/save", data);

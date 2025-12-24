@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { saveAuthor } from "../services/api";
+import { useNavigate } from "react-router-dom";
 import "../App.css";
 
 const AddAuthor = () => {
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({
     name: "",
     gender: "",
@@ -10,25 +13,47 @@ const AddAuthor = () => {
     rating: "",
   });
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+  /* 🔐 AUTH GUARD */
+  useEffect(() => {
+    const auth = localStorage.getItem("auth");
+    if (!auth) {
+      alert("Please login first");
+      navigate("/login");
+    }
+  }, [navigate]);
 
-  const handleSubmit = () => {
-    saveAuthor({
-      name: form.name,
-      gender: form.gender,
-      country: form.country,
-      rating: Number(form.rating),
-    })
-      .then(() => {
-        alert("Author Saved Successfully");
-        setForm({ name: "", gender: "", country: "", rating: "" });
-      })
-      .catch(() => {
-        alert("Failed to save author");
-      });
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
-  console.log(process.env.REACT_APP_BASE_URL);
+
+  const handleSubmit = async () => {
+    if (!form.name || !form.gender || !form.country || !form.rating) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    try {
+      await saveAuthor({
+        name: form.name,
+        gender: form.gender,
+        country: form.country,
+        rating: Number(form.rating),
+      });
+
+      alert("Author Saved Successfully");
+
+      setForm({
+        name: "",
+        gender: "",
+        country: "",
+        rating: "",
+      });
+    } catch (error) {
+      console.error(error);
+      alert("Failed to save author");
+    }
+  };
+
   return (
     <div className="card">
       <h2>Add Author</h2>
