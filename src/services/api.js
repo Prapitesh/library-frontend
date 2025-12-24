@@ -4,11 +4,13 @@ const API = axios.create({
   baseURL: "http://localhost:7777",
 });
 
-/* 🔐 Attach BASIC AUTH automatically */
+/* 🔐 Attach BASIC AUTH only for PROTECTED APIs */
 API.interceptors.request.use((config) => {
   const auth = JSON.parse(localStorage.getItem("auth"));
 
-  if (auth) {
+  const isAuthApi = config.url.startsWith("/auth");
+
+  if (auth && !isAuthApi) {
     config.auth = {
       username: auth.username,
       password: auth.password,
@@ -28,7 +30,6 @@ export const loginUser = (username, password) =>
 
 // ---------- STUDENT ----------
 export const saveStudent = (data) => API.post("/student/apis/save", data);
-
 export const getAllStudents = () => API.get("/student/apis/findAll");
 
 // ---------- AUTHOR ----------
